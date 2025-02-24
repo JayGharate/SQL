@@ -1,0 +1,36 @@
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    full_name VARCHAR(100),
+    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Posts (
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    content TEXT NOT NULL,
+    post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Likes (
+    like_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    post_id INT,
+    like_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES Posts(post_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Comments (
+    comment_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    post_id INT,
+    comment_text TEXT NOT NULL,
+    comment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES Posts(post_id) ON DELETE CASCADE
+);
